@@ -1,5 +1,5 @@
 const Product = require('../models/Product');
-const User = require('../models/User');
+const { combineProductsAndImages } = require('../utils/products');
 
 module.exports = {
   async getNewProducts(req, res) {
@@ -11,7 +11,8 @@ module.exports = {
         return res.status(404).json({ message: 'No new products found!' });
       }
 
-      res.json(products);
+      const finalProducts = await combineProductsAndImages(products);
+      res.status(200).json(finalProducts);
     } catch (err) {
       res.status(400).json({ message: 'Error occurred' });
     }
@@ -41,7 +42,8 @@ module.exports = {
         return res.status(404).json({ message: 'No products found!' });
       }
 
-      res.status(200).json(products);
+      const finalProducts = await combineProductsAndImages(products);
+      res.status(200).json(finalProducts);
     } catch (err) {
       res.status(400).json({ message: 'Error finding products' });
     }

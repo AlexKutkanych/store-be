@@ -23,7 +23,7 @@ const ProductSchema = new Schema({
   manufacturer: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  files: { type: [String], required: true },
+  images: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
   distribution: { type: Map, of: Number, required: true },
   quantity: { type: Number, required: true },
 });
