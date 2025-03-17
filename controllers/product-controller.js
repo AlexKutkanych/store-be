@@ -19,11 +19,31 @@ module.exports = {
 
   async createProduct(req, res) {
     try {
-      const jobs = await Product.create(req.body);
+      const product = await Product.create(req.body);
 
-      res.status(201).json(jobs);
+      res.status(201).json(product);
     } catch (err) {
       res.status(400).json(err, 'Error creating product');
+    }
+  },
+  async searchProduct(req, res) {
+    try {
+      const { category, subcategory } = req.body;
+      const query = { category };
+
+      if (subcategory) {
+        query.subcategory = subcategory;
+      }
+
+      const products = await Product.find(query);
+
+      if (!products || products.length === 0) {
+        return res.status(404).json({ message: 'No products found!' });
+      }
+
+      res.status(200).json(products);
+    } catch (err) {
+      res.status(400).json({ message: 'Error finding products' });
     }
   },
 };
