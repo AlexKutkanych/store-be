@@ -1,23 +1,10 @@
 const User = require('../models/User');
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const { COOKIE_MAX_AGE } = require('../utils/constants');
 const { handleError } = require('../utils/authErrorHandler');
 
 const createToken = (id) =>
   jwt.sign({ id }, process.env.AUTH_SECRET, { expiresIn: COOKIE_MAX_AGE });
-
-const generateMockUserParams = () => {
-  const randomImg = Math.round(Math.random(0, 5)) * 10;
-
-  return {
-    // location: 'San Francisco, CA',
-    // avatar: `https://i.pravatar.cc/150?img=${randomImg}`,
-    // jobPosition: 'Software Engineer',
-    // university: 'Massachusetts Institute of Technology',
-    // languages: ['English', 'Ukrainian'],
-    // acceptOffers: false,
-  };
-};
 
 module.exports = {
   async loginUser(req, res) {
@@ -69,7 +56,6 @@ module.exports = {
         phone,
         email,
         password,
-        ...generateMockUserParams(),
         acceptOffers,
       });
 

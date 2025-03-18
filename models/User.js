@@ -20,7 +20,7 @@ const userSchema = new Schema({
   },
 });
 
-// fire after document saved to DB
+// fire before document saved to DB
 userSchema.pre('save', async function (next) {
   // 'this' refers to User before create & save
   const salt = await bcrypt.genSalt()

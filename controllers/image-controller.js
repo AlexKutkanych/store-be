@@ -4,17 +4,20 @@ const Image = require('../models/Image');
 module.exports = {
   async addImage(req, res) {
     try {
-      console.log(req.file, 'file');
-      const alt = req.body.alt;
+      const { alt, productId } = req?.body;
+
+      if (!req?.uploadedImage) {
+        return res.status(404).json({ message: 'Image uploading error!' });
+      }
 
       const newImageData = {
-        url: req.file.path,
+        url: req?.uploadedImage?.secure_url,
         alt,
-        productId: req.body.productId,
+        productId,
       };
 
       const newImage = await Image.create(newImageData);
-      const product = await Product.findById(req.body.productId);
+      const product = await Product.findById(productId);
 
       if (!product) {
         return res.status(404).json({ message: 'Product not found!' });
@@ -39,7 +42,7 @@ module.exports = {
 
       res.json(products);
     } catch (err) {
-      res.status(400).json({ message: 'Error occurred' });
+      res.status(400).json({ message: 'Error occurred', err });
     }
   },
 };
