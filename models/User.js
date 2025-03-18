@@ -2,9 +2,9 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
-  username: {
+  phone: {
     type: String,
-    required: [true, 'Please enter a username'],
+    required: [true, 'Please enter a phone number'],
   },
   email: {
     type: String,
@@ -18,23 +18,6 @@ const userSchema = new Schema({
     required: [true, 'Please enter a password'],
     minlength: [6, 'Min password length is 6'],
   },
-  location: {
-    type: String
-  },
-  avatar: {
-    type: String
-  },
-  jobPosition: {
-    type: String
-  },
-  university: {
-    type: String
-  },
-  languages: {
-    type: [String]
-  },
-  savedJobs: [{ type: Schema.Types.ObjectId, ref: 'Job' }],
-  jobsApplied: [{ type: Schema.Types.ObjectId, ref: 'Job' }]
 });
 
 // fire after document saved to DB

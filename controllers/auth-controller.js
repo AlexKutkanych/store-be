@@ -10,12 +10,12 @@ const generateMockUserParams = () => {
   const randomImg = Math.round(Math.random(0, 5)) * 10;
 
   return {
-    location: 'San Francisco, CA',
-    avatar: `https://i.pravatar.cc/150?img=${randomImg}`,
-    jobPosition: 'Software Engineer',
-    university: 'Massachusetts Institute of Technology',
-    languages: ['English', 'Ukrainian'],
-    acceptOffers: false,
+    // location: 'San Francisco, CA',
+    // avatar: `https://i.pravatar.cc/150?img=${randomImg}`,
+    // jobPosition: 'Software Engineer',
+    // university: 'Massachusetts Institute of Technology',
+    // languages: ['English', 'Ukrainian'],
+    // acceptOffers: false,
   };
 };
 
@@ -56,17 +56,17 @@ module.exports = {
   },
   async signupUser(req, res) {
     try {
-      const username = req.body.name;
+      const phone = req.body.phone;
       const email = req.body.email;
       const password = req.body.password;
       const acceptOffers = req.body.acceptOffers;
 
-      if (!username || !email || !password) {
+      if (!phone || !email || !password) {
         return res.status(400).json({ message: 'Please enter all the fields' });
       }
 
       const user = await User.create({
-        username,
+        phone,
         email,
         password,
         ...generateMockUserParams(),
@@ -74,7 +74,8 @@ module.exports = {
       });
 
       const token = createToken(user._id);
-      delete user.password;
+      const finalUser = { ...user._doc };
+      delete finalUser.password;
 
       /* 
         to make cookies set in browser (due to different domains):
@@ -88,7 +89,7 @@ module.exports = {
       res.status(201).json({
         status: 'ok',
         message: 'User successfully created!',
-        user,
+        user: finalUser,
         hasToken: true,
       });
     } catch (err) {
