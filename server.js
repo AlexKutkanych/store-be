@@ -8,6 +8,7 @@ const { connectToDB } = require('./db');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+connectToDB();
 // Express middlewares
 app.use(cors({ credentials: true, origin: process.env.FRONT_END_URL }));
 app.use(express.json());
@@ -17,8 +18,10 @@ app.use(
   express.static(path.join(__dirname, process.env.UPLOAD_FOLDER))
 );
 app.use('/api/v1', routes);
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
 
 app.listen(PORT, () => {
   console.log(`API server running on port ${PORT}!`);
-  connectToDB();
 });

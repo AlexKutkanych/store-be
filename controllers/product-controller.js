@@ -14,7 +14,7 @@ module.exports = {
       const finalProducts = await combineProductsAndImages(products);
       res.status(200).json(finalProducts);
     } catch (err) {
-      res.status(400).json({ message: 'Error occurred' });
+      res.status(400).json({ message: 'Error occurred', err });
     }
   },
 
@@ -45,7 +45,7 @@ module.exports = {
       const finalProducts = await combineProductsAndImages(products);
       res.status(200).json(finalProducts);
     } catch (err) {
-      res.status(400).json({ message: 'Error finding products' });
+      res.status(400).json({ message: 'Error finding products', err });
     }
   },
 };

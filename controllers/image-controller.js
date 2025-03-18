@@ -25,7 +25,7 @@ module.exports = {
 
       res.status(201).json({ message: 'Image added successfully' });
     } catch (err) {
-      res.status(400).json({ message: 'Error adding image' });
+      res.status(400).json({ message: 'Error adding image', err });
     }
   },
   async getNewProducts(req, res) {

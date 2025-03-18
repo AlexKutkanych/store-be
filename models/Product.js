@@ -19,7 +19,6 @@ const ProductSchema = new Schema({
   size: { type: [String], enum: Object.values(Size), required: true },
   price: { type: Number, required: true },
   brand: { type: String, required: true },
-  collection: { type: String, default: null },
   manufacturer: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
